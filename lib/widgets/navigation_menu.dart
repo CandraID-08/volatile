@@ -18,7 +18,6 @@ class NavigationMenu extends StatefulWidget {
 class _NavigationMenuState extends State<NavigationMenu> {
   int _selectedIndex = 0;
 
-  // StorageBloc shared across pages
   late StorageBloc _storageBloc;
 
   @override

@@ -215,9 +215,6 @@ class ApiService {
     final session = SessionManager();
     String accessToken = await session.getAccessToken();
 
-    print('API: Fetching files from $baseURL/api/v1/files');
-    print('API: Access token: ${accessToken.substring(0, 20)}...');
-
     final response = await dio.get(
       '$baseURL/api/v1/files',
       options: Options(
@@ -232,17 +229,11 @@ class ApiService {
       ),
     );
 
-    print('API: Response status: ${response.statusCode}');
-    print('API: Response data type: ${response.data.runtimeType}');
-    print('API: Response data: ${response.data}');
-
     if (response.statusCode == 200) {
       try {
         List<dynamic> data;
         if (response.data is Map) {
-          // Check berbagai kemungkinan key di Map
           final map = response.data as Map<String, dynamic>;
-          print('API: Response keys: ${map.keys}');
 
           if (map['files'] != null) {
             data = map['files'] as List<dynamic>;
@@ -251,8 +242,6 @@ class ApiService {
           } else if (map['items'] != null) {
             data = map['items'] as List<dynamic>;
           } else {
-            // Jika tidak ada key yang cocok, return empty list
-            print('API: No files found in response, returning empty list');
             return [];
           }
         } else if (response.data is List) {
@@ -263,10 +252,8 @@ class ApiService {
           );
         }
 
-        print('API: Parsing ${data.length} files');
         return data.map((json) => FileItem.fromJson(json)).toList();
       } catch (e) {
-        print('API: Error parsing files: $e');
         rethrow;
       }
     }
