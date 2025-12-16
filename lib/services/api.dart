@@ -155,7 +155,7 @@ class ApiService {
     final accessToken = await session.getAccessToken();
 
     final response = await dio.get(
-      '$baseURL/api/profile/me',
+      '$baseURL/api/v1/me',
       options: Options(
         headers: {
           'Content-Type': 'application/json',
@@ -187,7 +187,7 @@ class ApiService {
     final accessToken = await session.getAccessToken();
 
     final response = await dio.put(
-      '$baseURL/api/profile/me',
+      '$baseURL/api/profile',
       data: {
         'full_name': fullName,
         if (profilePicture != null) 'profile_picture': profilePicture,
